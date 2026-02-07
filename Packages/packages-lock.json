@@ -1,5 +1,28 @@
 {
   "dependencies": {
+    "com.cysharp.r3": {
+      "version": "https://github.com/Cysharp/R3.git?path=src/R3.Unity/Assets/R3.Unity",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.unity.modules.imgui": "1.0.0"
+      },
+      "hash": "24d04125d68719816e24dfb79c60dd97ca396038"
+    },
+    "com.cysharp.unitask": {
+      "version": "2.5.10",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://package.openupm.com"
+    },
+    "com.github-glitchenzo.nugetforunity": {
+      "version": "4.5.0",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://package.openupm.com"
+    },
     "com.unity.ai.navigation": {
       "version": "2.0.4",
       "depth": 0,
@@ -204,6 +227,13 @@
         "com.unity.modules.jsonserialize": "1.0.0"
       },
       "url": "https://packages.unity.com"
+    },
+    "jp.notargs.unity-natural-mcp": {
+      "version": "https://github.com/notargs/UnityNaturalMCP.git?path=/UnityNaturalMCPServer",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "f3d2cd334bcb015b1e006c622a630b7b053bfb7a"
     },
     "com.unity.modules.accessibility": {
       "version": "1.0.0",

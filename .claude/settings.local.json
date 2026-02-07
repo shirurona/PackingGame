@@ -1,0 +1,46 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(curl:*)",
+      "mcp__unity-natural-mcp__run_edit_mode_tests",
+      "mcp__unity-natural-mcp__get_compile_logs",
+      "mcp__unity-natural-mcp__run_play_mode_tests",
+      "mcp__unity-natural-mcp__refresh_assets",
+      "mcp__unity-natural-mcp__get_current_console_logs",
+      "mcp__unity-natural-mcp__clear_console_logs",
+      "mcp__voicevox__speak",
+      "Bash(grep:*)",
+      "Bash(find:*)",
+      "Bash(wc:*)"
+    ],
+    "deny": [
+      "Bash(sudo:*)",
+      "Bash(rm:*)",
+      "Bash(rm -rf:*)",
+      "Bash(git reset:*)",
+      "Bash(git rebase:*)",
+      "Read(.env.*)",
+      "Read(id_rsa)",
+      "Read(id_ed25519)",
+      "Read(**/*token*)",
+      "Read(**/*key*)",
+      "Write(.env*)",
+      "Write(**/secrets/**)",
+      "Bash(curl:*)",
+      "Bash(wget:*)",
+      "Bash(nc:*)",
+      "Bash(npm uninstall:*)",
+      "Bash(npm remove:*)",
+      "Bash(psql:*)",
+      "Bash(mysql:*)",
+      "Bash(mongod:*)",
+      "mcp__supabase__execute_sql"
+    ]
+  },
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "unity-natural-mcp",
+    "voicevox"
+  ],
+  "outputStyle": "3Rスタイル"
+}

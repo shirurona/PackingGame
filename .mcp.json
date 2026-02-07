@@ -1,0 +1,27 @@
+{
+  "mcpServers": {
+    "voicevox": {
+      "command": "npx",
+      "args": [
+        "@t09tanaka/mcp-simple-voicevox"
+      ]
+    },
+    "unity-natural-mcp": {
+      "type": "http",
+      "url": "http://localhost:56780/mcp"
+    },
+    "github": {
+      "type": "stdio",
+      "command": "cmd",
+      "args": [
+        "/c",
+        "npx",
+        "-y",
+        "@modelcontextprotocol/server-github"
+      ],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "%GITHUB_PERSONAL_ACCESS_TOKEN%"
+      }
+    }
+  }
+}
