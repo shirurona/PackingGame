@@ -1,0 +1,26 @@
+name: Generate issue
+
+on:
+  issues:
+    types: [opened, edited]
+
+permissions:
+  issues: write
+  contents: read
+
+jobs:
+  generate-issue:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Generate issue
+        uses: shirurona/auto-generate-issue@main
+        env: 
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          gemini-token: ${{ secrets.GEMINI_TOKEN }}
+          template-filename: issue.md
+          project-context: ./CLAUDE.md
