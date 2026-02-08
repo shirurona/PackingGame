@@ -29,12 +29,10 @@
       "Bash(pwd)",
       "Bash(date *)",
       "Read(~/.zshrc)",
-      "Read(~/.bashrc)"
-    ],
-    "ask": [
-      "Bash(git push *)",
-      "Bash(rm *)",
-      "Bash(mv *)"
+      "Read(~/.bashrc)",
+      "mcp__unity-natural-mcp__RefreshAssets",
+      "mcp__unity-natural-mcp__GetCompileLogs",
+      "mcp__unity-natural-mcp__RunEditModeTests"
     ],
     "deny": [
       "Bash(git add .)",
@@ -66,17 +64,25 @@
       "Bash(nc:*)",
       "Bash(npm uninstall:*)",
       "Bash(npm remove:*)"
+    ],
+    "ask": [
+      "Bash(git push *)",
+      "Bash(rm *)",
+      "Bash(mv *)"
     ]
-  },
-  "sandbox": {
-    "enabled": true,
-    "autoAllowBashIfSandboxed": true,
-    "excludedCommands": ["git", "docker"]
   },
   "enableAllProjectMcpServers": true,
   "enabledMcpjsonServers": [
     "unity-natural-mcp",
     "voicevox"
   ],
-  "outputStyle": "かわいいスタイル"
+  "outputStyle": "かわいいスタイル",
+  "sandbox": {
+    "enabled": true,
+    "autoAllowBashIfSandboxed": true,
+    "excludedCommands": [
+      "git",
+      "docker"
+    ]
+  }
 }
