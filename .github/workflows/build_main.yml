@@ -78,5 +78,5 @@ jobs:
         with:
           personal_token: ${{ secrets.PERSONAL_TOKEN }}
           external_repository: shirurona/PackingGame
-          publish_branch: master
+          publish_branch: deploy
           publish_dir: build/WebGL/WebGL
