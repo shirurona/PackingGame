@@ -74,7 +74,8 @@
   "enableAllProjectMcpServers": true,
   "enabledMcpjsonServers": [
     "unity-natural-mcp",
-    "voicevox"
+    "voicevox",
+    "github"
   ],
   "outputStyle": "かわいいスタイル",
   "sandbox": {
