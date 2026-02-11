@@ -44,6 +44,13 @@ public class ItemView : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
         _renderer.SetPropertyBlock(block);
     }
 
+    /// <summary>回転状態を更新し、transformに反映する。</summary>
+    public void ApplyRotation(RotationState rotation)
+    {
+        CurrentRotation = rotation;
+        transform.rotation = rotation.ToQuaternion();
+    }
+
     /// <summary>回転適用後の実サイズ</summary>
     public Vector3 EffectiveSize => CurrentRotation.Apply(Data.Size);
 

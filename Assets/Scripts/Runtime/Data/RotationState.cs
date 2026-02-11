@@ -40,8 +40,11 @@ public class RotationState
     }
 
     public RotationState RotateX() => new RotationState(X + 1, Y, Z);
+    public RotationState RotateXReverse() => new RotationState(X - 1, Y, Z);
     public RotationState RotateY() => new RotationState(X, Y + 1, Z);
+    public RotationState RotateYReverse() => new RotationState(X, Y - 1, Z);
     public RotationState RotateZ() => new RotationState(X, Y, Z + 1);
+    public RotationState RotateZReverse() => new RotationState(X, Y, Z - 1);
 
     public static RotationState Random()
     {

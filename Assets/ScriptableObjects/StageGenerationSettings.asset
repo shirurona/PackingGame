@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: StageGenerationSettings
   m_EditorClassIdentifier: 
   BoxSizeMin: {x: 3, y: 3, z: 3}
-  BoxSizeMax: {x: 8, y: 8, z: 8}
-  ItemCountMin: 5
-  ItemCountMax: 10
+  BoxSizeMax: {x: 4, y: 4, z: 4}
+  ItemCountMin: 1
+  ItemCountMax: 1
   MinEdgeSize: 0.5
