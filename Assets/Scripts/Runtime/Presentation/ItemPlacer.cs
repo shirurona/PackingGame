@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -9,15 +10,25 @@ public class ItemPlacer : MonoBehaviour
 {
     [SerializeField] StageSpawner _spawner;
     [SerializeField] Camera _camera;
+    [SerializeField] float _snapThreshold = 0.3f;
 
     private ItemView _dragging;
     private Plane _dragPlane;
+    private Vector3 _boxSize;
+    private IReadOnlyList<PlacedItem> _placedItems;
 
     /// <summary>アイテム配置時に発火（Data, Position, Rotation）</summary>
     public event Action<ItemData, Vector3, RotationState> ItemPlaced;
 
     /// <summary>アイテム取り出し時に発火</summary>
     public event Action<ItemData> ItemRemoved;
+
+    /// <summary>ステージ開始時に箱サイズと配置済みアイテム参照をセットする。</summary>
+    public void SetPlayContext(Vector3 boxSize, IReadOnlyList<PlacedItem> placedItems)
+    {
+        _boxSize = boxSize;
+        _placedItems = placedItems;
+    }
 
     void OnEnable()
     {
@@ -57,6 +68,10 @@ public class ItemPlacer : MonoBehaviour
             var pos = _dragging.transform.position;
             pos.x = point.x;
             pos.z = point.z;
+
+            if (_placedItems != null)
+                pos = ItemSnapper.Snap(pos, _dragging.EffectiveSize, _boxSize, _placedItems, _snapThreshold);
+
             _dragging.transform.position = pos;
         }
     }

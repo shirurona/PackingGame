@@ -49,6 +49,7 @@ public class GameManager : MonoBehaviour
         var stage = _generator.Generate(_settings);
         _playManager = new StagePlayManager(stage);
         _spawner.SpawnStage(stage);
+        _placer.SetPlayContext(stage.BoxSize, _playManager.PlacedItems);
         _state.Value = GameState.Playing;
 
         Debug.Log($"ステージ開始: {stage}");
