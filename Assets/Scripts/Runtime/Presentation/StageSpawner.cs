@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,6 +12,11 @@ public class StageSpawner : MonoBehaviour
 
     private GameObject _boxInstance;
     private readonly List<ItemView> _itemInstances = new();
+
+    public IReadOnlyList<ItemView> ItemInstances => _itemInstances;
+
+    /// <summary>アイテム生成時に発火。ItemPlacerがイベント登録に使う。</summary>
+    public event Action<ItemView> ItemSpawned;
 
     public void SpawnStage(StageData stageData)
     {
@@ -35,6 +41,7 @@ public class StageSpawner : MonoBehaviour
             );
 
             _itemInstances.Add(itemView);
+            ItemSpawned?.Invoke(itemView);
         }
     }
 

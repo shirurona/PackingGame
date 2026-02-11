@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField] StageGenerationSettings _settings;
     [SerializeField] StageSpawner _spawner;
+    [SerializeField] ItemPlacer _placer;
     [SerializeField] float _clearDelay = 2f;
 
     readonly ReactiveProperty<GameState> _state = new(GameState.Title);
@@ -17,12 +18,27 @@ public class GameManager : MonoBehaviour
     readonly IStageGenerator _generator = new RecursiveSplitStageGenerator();
 
     StagePlayManager _playManager;
-    public StagePlayManager PlayManager => _playManager;
 
     void Start()
     {
+        _placer.ItemPlaced += OnItemPlaced;
+        _placer.ItemRemoved += OnItemRemoved;
+
         // 起動時は即ゲーム開始（タイトルUIができたらStartGame()をボタンから呼ぶ）
         StartGame();
+    }
+
+    void OnItemPlaced(ItemData data, Vector3 position, RotationState rotation)
+    {
+        _playManager.PlaceItem(data, position, rotation);
+        CheckClear();
+    }
+
+    void OnItemRemoved(ItemData data)
+    {
+        var placed = _playManager.FindByData(data);
+        if (placed != null)
+            _playManager.RemoveItem(placed);
     }
 
     /// <summary>
@@ -42,7 +58,7 @@ public class GameManager : MonoBehaviour
     /// クリア判定を実行し、クリアなら次ステージへ遷移する。
     /// アイテム配置後に呼び出すこと。
     /// </summary>
-    public void CheckClear()
+    void CheckClear()
     {
         if (_playManager.IsClear())
             OnClearedAsync().Forget();

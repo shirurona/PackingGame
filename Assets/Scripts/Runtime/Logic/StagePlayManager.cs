@@ -21,6 +21,16 @@ public class StagePlayManager
         _placedItems.Add(new PlacedItem(data, position, rotation));
     }
 
+    public PlacedItem FindByData(ItemData data)
+    {
+        foreach (var placed in _placedItems)
+        {
+            if (placed.Data == data)
+                return placed;
+        }
+        return null;
+    }
+
     public void RemoveItem(PlacedItem placed)
     {
         _placedItems.Remove(placed);
