@@ -38,7 +38,7 @@ public class StageSpawner : MonoBehaviour
         }
     }
 
-    private void ClearStage()
+    public void ClearStage()
     {
         if (_boxInstance != null)
         {

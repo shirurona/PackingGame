@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ab48aa2b5b9ffc48a6536c08fffc2c7, type: 3}
+  m_Name: StageGenerationSettings
+  m_EditorClassIdentifier: 
+  BoxSizeMin: {x: 3, y: 3, z: 3}
+  BoxSizeMax: {x: 8, y: 8, z: 8}
+  ItemCountMin: 5
+  ItemCountMax: 10
+  MinEdgeSize: 0.5
