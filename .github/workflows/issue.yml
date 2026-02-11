@@ -17,10 +17,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
+          repository: shirurona/auto-generate-issue # Actionがあるリポジトリ
           token: ${{ secrets.PERSONAL_TOKEN }}
+          path: .github/actions/auto-generate-issue
           
       - name: Generate issue
-        uses: shirurona/auto-generate-issue@main
+        uses: ./.github/actions/auto-generate-issue
         env: 
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
