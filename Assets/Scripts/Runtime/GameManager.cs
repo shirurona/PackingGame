@@ -18,14 +18,25 @@ public class GameManager : MonoBehaviour
     readonly IStageGenerator _generator = new RecursiveSplitStageGenerator();
 
     StagePlayManager _playManager;
+    TimeManager _timeManager;
+
+    public ReadOnlyReactiveProperty<float> RemainingTime => _timeManager?.RemainingTime;
 
     void Start()
     {
         _placer.ItemPlaced += OnItemPlaced;
         _placer.ItemRemoved += OnItemRemoved;
 
+        _timeManager = new TimeManager();
+        _timeManager.OnTimeUp.Subscribe(_ => OnTimeUpAsync().Forget()).AddTo(this);
+
         // 起動時は即ゲーム開始（タイトルUIができたらStartGame()をボタンから呼ぶ）
         StartGame();
+    }
+
+    void OnDestroy()
+    {
+        _timeManager?.Dispose();
     }
 
     void OnItemPlaced(ItemData data, Vector3 position, RotationState rotation)
@@ -52,6 +63,9 @@ public class GameManager : MonoBehaviour
         _placer.SetPlayContext(stage.BoxSize, _playManager.PlacedItems);
         _state.Value = GameState.Playing;
 
+        // 制限時間カウントダウン開始
+        _timeManager.StartCountdown(stage.TimeLimit);
+
         Debug.Log($"ステージ開始: {stage}");
     }
 
@@ -68,10 +82,26 @@ public class GameManager : MonoBehaviour
     async UniTaskVoid OnClearedAsync()
     {
         _state.Value = GameState.Cleared;
+        _timeManager.StopCountdown();
         Debug.Log("ステージクリア！");
 
         await UniTask.Delay((int)(_clearDelay * 1000), cancellationToken: destroyCancellationToken);
 
+        StartGame();
+    }
+
+    async UniTaskVoid OnTimeUpAsync()
+    {
+        if (_state.Value != GameState.Playing) return;
+
+        _state.Value = GameState.GameOver;
+        _placer.enabled = false; // プレイヤー操作を無効化
+        Debug.Log("タイムアップ！ゲームオーバー");
+
+        await UniTask.Delay((int)(_clearDelay * 1000), cancellationToken: destroyCancellationToken);
+
+        // ゲームオーバー後は再スタート
+        _placer.enabled = true;
         StartGame();
     }
 }

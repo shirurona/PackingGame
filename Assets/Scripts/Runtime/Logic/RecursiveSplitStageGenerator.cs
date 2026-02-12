@@ -52,7 +52,10 @@ public class RecursiveSplitStageGenerator : IStageGenerator
             ));
         }
 
-        return new StageData(boxSize, items);
+        // 制限時間を難易度パラメータからランダムに生成
+        float timeLimit = Random.Range(settings.TimeLimitMin, settings.TimeLimitMax);
+
+        return new StageData(boxSize, items, timeLimit);
     }
 
     private static int SelectRegion(List<Bounds> regions, float minEdge)
