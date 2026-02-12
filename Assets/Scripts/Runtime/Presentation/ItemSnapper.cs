@@ -16,8 +16,8 @@ public static class ItemSnapper
         float threshold)
     {
         var halfItem = itemSize * 0.5f;
-        // 論理座標→ビジュアル座標の変換オフセット
-        var boxOffset = -boxSize * 0.5f;
+        // 論理座標→ビジュアル座標の変換オフセット（Y軸は論理=ビジュアルなので0）
+        var boxOffset = new Vector3(-boxSize.x * 0.5f, 0f, -boxSize.z * 0.5f);
 
         center.x = SnapAxis(center.x, halfItem.x, boxSize.x, boxOffset.x, placedItems, 0, threshold);
         center.y = SnapAxis(center.y, halfItem.y, boxSize.y, boxOffset.y, placedItems, 1, threshold);
@@ -38,9 +38,9 @@ public static class ItemSnapper
         float bestDist = threshold;
         float bestShift = 0f;
 
-        // 箱の壁（ビジュアル座標: -boxAxisSize/2 〜 +boxAxisSize/2）
-        float wallMin = -boxAxisSize * 0.5f;
-        float wallMax = boxAxisSize * 0.5f;
+        // 箱の壁（ビジュアル座標）
+        float wallMin = boxOffset;
+        float wallMax = boxOffset + boxAxisSize;
         CheckFace(itemMin, wallMin, ref bestDist, ref bestShift);
         CheckFace(itemMax, wallMax, ref bestDist, ref bestShift);
 

@@ -22,7 +22,7 @@ public class StageSpawner : MonoBehaviour
     {
         ClearStage();
 
-        // 箱を生成
+        // 箱を生成（底面をY=0に配置）
         _boxInstance = Instantiate(_boxPrefab, transform);
         _boxInstance.transform.localScale = stageData.BoxSize;
 

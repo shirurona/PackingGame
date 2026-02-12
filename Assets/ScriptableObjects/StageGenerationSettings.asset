@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BoxSizeMin: {x: 3, y: 3, z: 3}
   BoxSizeMax: {x: 4, y: 4, z: 4}
-  ItemCountMin: 1
-  ItemCountMax: 1
+  ItemCountMin: 4
+  ItemCountMax: 7
   MinEdgeSize: 0.5

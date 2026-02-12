@@ -523,8 +523,8 @@ MonoBehaviour:
   _spawner: {fileID: 936928655}
   _camera: {fileID: 330585545}
   _rotator: {fileID: 936928659}
-  _snapThreshold: 0.3
-  _dragPlaneOffset: 50
+  _snapThreshold: 0
+  _boxTolerance: 0
 --- !u!114 &936928659
 MonoBehaviour:
   m_ObjectHideFlags: 0

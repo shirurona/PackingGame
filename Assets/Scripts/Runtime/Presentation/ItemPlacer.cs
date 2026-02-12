@@ -12,10 +12,10 @@ public class ItemPlacer : MonoBehaviour
     [SerializeField] Camera _camera;
     [SerializeField] ItemRotator _rotator;
     [SerializeField] float _snapThreshold = 0.3f;
-    [SerializeField] float _dragPlaneOffset = 10f;
+    [SerializeField, Tooltip("箱内判定の許容誤差")]
+    float _boxTolerance = 0.01f;
 
     private ItemView _dragging;
-    private Plane _dragPlane;
     private Vector3 _boxSize;
     private IReadOnlyList<PlacedItem> _placedItems;
 
@@ -57,26 +57,23 @@ public class ItemPlacer : MonoBehaviour
         _dragging = item;
         _dragging.SetTransparent(true);
         _rotator.SetTarget(_dragging);
-        float planeHeight = _boxSize.y * 0.5f + _dragPlaneOffset;
-        _dragPlane = new Plane(Vector3.up, new Vector3(0, planeHeight, 0));
     }
 
     void OnDrag(ItemView item, PointerEventData eventData)
     {
         if (_dragging == null) return;
 
-        var ray = _camera.ScreenPointToRay(eventData.position);
-        if (_dragPlane.Raycast(ray, out float distance))
-        {
-            var point = ray.GetPoint(distance);
-            var effectiveSize = _dragging.EffectiveSize;
-            var pos = new Vector3(point.x, CalcDropY(point, effectiveSize), point.z);
+        // マウス位置をワールド座標に変換（カメラのY高さをZ深度として使用）
+        var screenPos = eventData.position;
+        var worldPos = _camera.ScreenToWorldPoint(new Vector3(screenPos.x, screenPos.y, _camera.transform.position.y));
 
-            if (_placedItems != null)
-                pos = ItemSnapper.Snap(pos, effectiveSize, _boxSize, _placedItems, _snapThreshold);
+        var effectiveSize = _dragging.EffectiveSize;
+        var pos = new Vector3(worldPos.x, CalcDropY(worldPos, effectiveSize), worldPos.z);
 
-            _dragging.transform.position = pos;
-        }
+        //if (_placedItems != null)
+        //    pos = ItemSnapper.Snap(pos, effectiveSize, _boxSize, _placedItems, _snapThreshold);
+
+        _dragging.transform.position = pos;
     }
 
     void OnEndDrag(ItemView item, PointerEventData _)
@@ -88,6 +85,7 @@ public class ItemPlacer : MonoBehaviour
 
         var effectiveSize = _dragging.EffectiveSize;
         var center = _dragging.transform.position;
+
         var cornerPosition = center - effectiveSize * 0.5f;
         ItemPlaced?.Invoke(_dragging.Data, cornerPosition, _dragging.CurrentRotation);
 
@@ -98,27 +96,20 @@ public class ItemPlacer : MonoBehaviour
     float CalcDropY(Vector3 center, Vector3 itemSize)
     {
         var halfItem = itemSize * 0.5f;
-        var boxOffset = -_boxSize * 0.5f;
-        float floor = -_boxSize.y * 0.5f;
-        float maxTop = floor;
+        float maxTop = 0f;
 
         if (_placedItems != null)
         {
             for (int i = 0; i < _placedItems.Count; i++)
             {
                 var bounds = _placedItems[i].GetBounds();
-                // 論理座標→ビジュアル座標変換
-                float oMinX = bounds.min.x + boxOffset.x;
-                float oMaxX = bounds.max.x + boxOffset.x;
-                float oMinZ = bounds.min.z + boxOffset.z;
-                float oMaxZ = bounds.max.z + boxOffset.z;
 
-                bool overlapX = (center.x + halfItem.x > oMinX) && (center.x - halfItem.x < oMaxX);
-                bool overlapZ = (center.z + halfItem.z > oMinZ) && (center.z - halfItem.z < oMaxZ);
+                bool overlapX = (center.x + halfItem.x > bounds.min.x) && (center.x - halfItem.x < bounds.max.x);
+                bool overlapZ = (center.z + halfItem.z > bounds.min.z) && (center.z - halfItem.z < bounds.max.z);
 
                 if (overlapX && overlapZ)
                 {
-                    float otherTop = bounds.max.y + boxOffset.y;
+                    float otherTop = bounds.max.y;
                     if (otherTop > maxTop) maxTop = otherTop;
                 }
             }
