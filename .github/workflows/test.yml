@@ -13,7 +13,7 @@ concurrency:
 jobs:
   unity-Test:
     name: Run the unity test steps
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       # Actionsがリポジトリにアクセスできるようにする
       - name: Checkout
@@ -44,3 +44,4 @@ jobs:
           testMode: editmode
 
           githubToken: ${{ secrets.GITHUB_TOKEN }}
+
