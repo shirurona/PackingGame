@@ -17,4 +17,9 @@ public class StageGenerationSettings : ScriptableObject
     [Header("分割制約")]
     [Tooltip("アイテムの最小辺サイズ。これ未満の辺は生成されない")]
     public float MinEdgeSize = 0.5f;
+
+    [Header("制限時間")]
+    [Tooltip("ステージクリアまでの制限時間（秒）")]
+    public float TimeLimitMin = 30f;
+    public float TimeLimitMax = 120f;
 }

@@ -8,15 +8,17 @@ public class StageData
 {
     public Vector3 BoxSize;
     public List<ItemData> Items;
+    public float TimeLimit;
 
-    public StageData(Vector3 boxSize, List<ItemData> items)
+    public StageData(Vector3 boxSize, List<ItemData> items, float timeLimit)
     {
         BoxSize = boxSize;
         Items = items;
+        TimeLimit = timeLimit;
     }
 
     public override string ToString()
     {
-        return $"Stage: Box={BoxSize}, Items={Items.Count}";
+        return $"Stage: Box={BoxSize}, Items={Items.Count}, TimeLimit={TimeLimit}s";
     }
 }

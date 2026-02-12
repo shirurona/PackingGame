@@ -1,1 +1,1 @@
-public enum GameState { Title, Playing, Cleared }
+public enum GameState { Title, Playing, Cleared, GameOver }
