@@ -22,7 +22,7 @@ jobs:
           lfs: true
       
       # LibraryをCacheしてBuildを高速化する
-      - uses: actions/cache@v4.1.0
+      - uses: actions/cache@v4
         with:
           path: ./Library
           key: Library-PackingGame-Web
@@ -42,4 +42,5 @@ jobs:
           projectPath: .
           unityVersion: 6000.0.26f1
           testMode: editmode
+
           githubToken: ${{ secrets.GITHUB_TOKEN }}
