@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// ステージの定義データ。箱サイズとアイテム一覧を保持する。
+/// ステージの定義データ。箱サイズ、アイテム一覧、制限時間を保持する。
 /// </summary>
 public class StageData
 {

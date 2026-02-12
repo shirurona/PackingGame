@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using Cysharp.Threading.Tasks;
 using R3;
 using UnityEngine;
@@ -47,10 +48,17 @@ public class TimeManager : IDisposable
     {
         try
         {
+            var previousTime = Time.unscaledTime;
+
             while (_isRunning && _remainingTime.Value > 0f)
             {
-                await UniTask.Delay(100, cancellationToken: cancellationToken); // 0.1秒ごとに更新
-                _remainingTime.Value = Mathf.Max(0f, _remainingTime.Value - 0.1f);
+                await UniTask.Delay(100, cancellationToken: cancellationToken); // 約0.1秒ごとに更新
+
+                var currentTime = Time.unscaledTime;
+                var delta = currentTime - previousTime;
+                previousTime = currentTime;
+
+                _remainingTime.Value = Mathf.Max(0f, _remainingTime.Value - delta);
             }
 
             if (_remainingTime.Value <= 0f && _isRunning)

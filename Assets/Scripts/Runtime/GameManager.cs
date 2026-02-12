@@ -20,15 +20,18 @@ public class GameManager : MonoBehaviour
     StagePlayManager _playManager;
     TimeManager _timeManager;
 
-    public ReadOnlyReactiveProperty<float> RemainingTime => _timeManager?.RemainingTime;
+    public ReadOnlyReactiveProperty<float> RemainingTime => _timeManager.RemainingTime;
+
+    void Awake()
+    {
+        _timeManager = new TimeManager();
+        _timeManager.OnTimeUp.Subscribe(_ => OnTimeUpAsync().Forget()).AddTo(this);
+    }
 
     void Start()
     {
         _placer.ItemPlaced += OnItemPlaced;
         _placer.ItemRemoved += OnItemRemoved;
-
-        _timeManager = new TimeManager();
-        _timeManager.OnTimeUp.Subscribe(_ => OnTimeUpAsync().Forget()).AddTo(this);
 
         // 起動時は即ゲーム開始（タイトルUIができたらStartGame()をボタンから呼ぶ）
         StartGame();

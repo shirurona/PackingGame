@@ -19,6 +19,13 @@ public class TimerView : MonoBehaviour
 
     void Start()
     {
+        if (_gameManager == null)
+        {
+            Debug.LogError($"{nameof(TimerView)}: {nameof(_gameManager)} is not assigned.", this);
+            enabled = false;
+            return;
+        }
+
         // GameManagerの残り時間を購読して表示
         _gameManager.RemainingTime?.Subscribe(UpdateTimerText).AddTo(this);
     }
