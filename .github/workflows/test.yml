@@ -18,8 +18,6 @@ jobs:
       # Actionsがリポジトリにアクセスできるようにする
       - name: Checkout
         uses: actions/checkout@v5
-        with:
-          lfs: true
       
       # LibraryをCacheしてBuildを高速化する
       - uses: actions/cache@v4
@@ -44,4 +42,5 @@ jobs:
           testMode: editmode
 
           githubToken: ${{ secrets.GITHUB_TOKEN }}
+
 
