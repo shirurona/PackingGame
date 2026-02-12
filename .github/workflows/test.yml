@@ -50,8 +50,10 @@ jobs:
           projectPath: .
           unityVersion: 6000.0.26f1
           testMode: editmode
+          runAsHostUser: true
 
           githubToken: ${{ secrets.GITHUB_TOKEN }}
+
 
 
 
