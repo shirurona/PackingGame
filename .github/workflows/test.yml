@@ -18,6 +18,16 @@ jobs:
       # Actionsがリポジトリにアクセスできるようにする
       - name: Checkout
         uses: actions/checkout@v5
+
+      # Install NuGetForUnity.Cli
+      - name: Restore dotnet tool - NuGetForUnity.Cli
+        run: dotnet new tool-manifest
+
+      - name: Install NuGetForUnity.Cli Tool
+        run: dotnet tool install NuGetForUnity.Cli --version 4.1.1
+
+      - name: Restore NuGet packages using NuGetForUnity.Cli
+        run: dotnet nugetforunity restore .
       
       # LibraryをCacheしてBuildを高速化する
       - uses: actions/cache@v4
@@ -42,5 +52,6 @@ jobs:
           testMode: editmode
 
           githubToken: ${{ secrets.GITHUB_TOKEN }}
+
 
 
